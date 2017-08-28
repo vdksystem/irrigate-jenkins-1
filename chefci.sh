@@ -17,6 +17,7 @@ git diff --name-only origin/master
 # Determine which recipes were changed (could be list)
 # recipe files in PR
 REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
+COOKBOOK=$(grep name metadata.rb | egrep -o 'irrigate-\w+')
 CHANGED_RECIPES=$(basename -s .rb `git diff --name-only origin/master | grep recipes || echo "false"`)
 
 if [ "${CHANGED_RECIPES}" == "false" ]; then
@@ -25,7 +26,7 @@ if [ "${CHANGED_RECIPES}" == "false" ]; then
 fi
 
 for file in ${CHANGED_RECIPES}; do
-  for role in $(grep "recipe\[${REPO_NAME}::${file}" -lir ${ROLES_PATH}); do
+  for role in $(grep "recipe\[${COOKBOOK}::${file}" -lir ${ROLES_PATH}); do
     role_file=$(basename ${role})
     role_name=${role_file%%.*}
     ROLES+=(${role_name})
@@ -42,8 +43,10 @@ COOKBOOKS=($(echo ${RECIPES[@]} | egrep -o 'irrigate-\w+' | sort | uniq))
 mkdir cookbooks
 cd cookbooks
 for cookbook in ${COOKBOOKS[@]}; do
-  git clone -v https://github.com/gallantra/${cookbook}.git
-  echo "cookbook '${cookbook}', path: 'cookbooks/${cookbook}'" >> ../Berksfile
+  if [ "${cookbook}" != "${COOKBOOK}" ]; then
+    git clone -v https://github.com/gallantra/${cookbook}.git
+    echo "cookbook '${cookbook}', path: 'cookbooks/${cookbook}'" >> ../Berksfile
+  fi
 done
 
 cd ../
