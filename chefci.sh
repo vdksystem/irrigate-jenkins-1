@@ -17,9 +17,13 @@ git diff --name-only origin/master
 # Determine which recipes were changed (could be list)
 # recipe files in PR
 REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
-CHANGED_RECIPES=$(basename -s .rb `git diff --name-only origin/master | grep recipes`)
-echo ${CHANGED_RECIPES}
-#RECIPE_NAME='recipe\[irrigate-jenkins::workstation' # For testing
+CHANGED_RECIPES=$(basename -s .rb `git diff --name-only origin/master | grep recipes || echo "false"`)
+
+if [ "${CHANGED_RECIPES}" == "false" ]; then
+  echo "No recipes were changed, exiting..."
+  exit 0
+fi
+
 for file in ${CHANGED_RECIPES}; do
   for role in $(grep "recipe\[${REPO_NAME}::${file}" -lir ${ROLES_PATH}); do
     role_file=$(basename ${role})
