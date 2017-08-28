@@ -111,3 +111,4 @@ done
 
 echo "time to fire kitchen test"
 cat .kitchen.yml
+kitchen test
