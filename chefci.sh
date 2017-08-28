@@ -39,7 +39,7 @@ mkdir cookbooks
 cd cookbooks
 
 for cookbook in ${COOKBOOKS[@]}; do
-  echo "git clone git@github.com:theorchard/${cookbook}.git"
+  echo "git clone git@github.com:gallantra/${cookbook}.git"
   echo "cookbook '${cookbook}', path: 'cookbooks/${cookbook}'" >> ../Berksfile
 done
 
