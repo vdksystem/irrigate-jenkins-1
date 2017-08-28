@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set +x
 CHEF_REPO_PATH='chef_repo'
 ROLES_PATH="${CHEF_REPO_PATH}/roles"
 SECRET_KEY_PATH='/tmp/secret'
