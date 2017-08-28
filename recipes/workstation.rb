@@ -1,2 +1,1 @@
-package 'iftop'
 package 'vim'
