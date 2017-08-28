@@ -42,7 +42,7 @@ COOKBOOKS=($(echo ${RECIPES[@]} | egrep -o 'irrigate-\w+' | sort | uniq))
 mkdir cookbooks
 cd cookbooks
 for cookbook in ${COOKBOOKS[@]}; do
-  echo "git clone -v https://github.com/gallantra/${cookbook}.git"
+  git clone -v https://github.com/gallantra/${cookbook}.git
   echo "cookbook '${cookbook}', path: 'cookbooks/${cookbook}'" >> ../Berksfile
 done
 
