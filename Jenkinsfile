@@ -26,4 +26,5 @@ node {
       '''
     )
   }
+  cleanWs()
 }

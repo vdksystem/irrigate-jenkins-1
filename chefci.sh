@@ -8,7 +8,7 @@ ROLES=()
 RECIPES=()
 
 # For using roles and data bags in our tests, we have to clone irrigate-chef-repo
-CHEF_REPO='https://github.com/gallantra/chefci.git'
+CHEF_REPO='https://github.com/gallantra/irrigate-chef-repo.git'
 rm -rf chef_repo
 git clone ${CHEF_REPO} ${CHEF_REPO_PATH}
 
@@ -107,3 +107,4 @@ EOF
 done
 
 echo "time to fire kitchen test"
+cat .kitchen.yml
