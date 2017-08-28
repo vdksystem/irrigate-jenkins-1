@@ -1,0 +1,4 @@
+~FC064		#Ensure issues_url is set in metadata
+~FC065		#Ensure source_url is set in metadata
+~FC066		#Ensure chef_version is set in metadata
+~FC078		#Ensure cookbook shared under an OSI-approved open source license
