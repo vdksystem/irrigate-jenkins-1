@@ -22,7 +22,7 @@ node {
     sh(
       script: '''
       source /var/lib/jenkins/.bash_profile
-      ./chefci.sh
+      /opt/chefci/ci.sh
       '''
     )
   }

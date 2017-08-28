@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set +x
+
 CHEF_REPO_PATH='chef_repo'
 ROLES_PATH="${CHEF_REPO_PATH}/roles"
 SECRET_KEY_PATH='/tmp/secret'
@@ -84,7 +84,7 @@ platforms:
 suites:
 EOF
 
-for role in ${ROLES}; do
+for role in ${ROLES[@]}; do
   recipes_in_role=$(egrep -h 'recipe\[irrigate' ${ROLES_PATH}/${role}.json | egrep -o 'irrigate-\w+::\w+')
   cat >> .kitchen.yml << EOF
     - name: ${role}
@@ -98,6 +98,9 @@ for role in ${ROLES}; do
 EOF
   for recipe in ${recipes_in_role}; do
     test_file="cookbooks/${recipe%::*}/test/smoke/${recipe##*::}"
+    if [ "${recipe%::*}" == "${COOKBOOK}" ]; then
+      test_file="test/smoke/${recipe##*::}"
+    fi
     if [ -d ${test_file} ]; then
       cat >> .kitchen.yml << EOF
           - ${test_file}
